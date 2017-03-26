@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20170325012310) do
 
   create_table "datasets", force: :cascade do |t|
     t.text     "name",       null: false
-    t.decimal  "year",       null: false
+    t.integer  "year",       null: false
     t.text     "resource",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
