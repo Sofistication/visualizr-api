@@ -24,4 +24,10 @@ RSpec.describe Dataset, type: :model do
       expect(Dataset.first.retrieve_data.class).to eq(Tempfile)
     end
   end
+
+  describe 'process_data' do
+    it 'returns a hash' do
+      expect(Dataset.first.process_data.class).to eq(Hash)
+    end
+  end
 end
