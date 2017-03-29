@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 class VisualizationSerializer < ActiveModel::Serializer
-  attributes :id, :color
-  has_one :user
-  has_one :dataset
+  attributes :id, :color, :user, :dataset
+
+  def user
+    object.user.id
+  end
+
+  def dataset
+    object.dataset.id
+  end
 end
