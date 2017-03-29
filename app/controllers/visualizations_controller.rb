@@ -5,7 +5,8 @@ class VisualizationsController < OpenReadController
 
   # GET /visualizations
   def index
-    @visualizations = Visualization.all
+    # @visualizations = Visualization.all
+    @visualizations = current_user.visualizations
 
     render json: @visualizations
   end
