@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Visualizations', type: :request do
   def visualization_params
     {
-      dataset_id: 1,
+      dataset_id: Dataset.first.id,
       color: '#000000'
     }
   end
@@ -37,12 +37,12 @@ RSpec.describe 'Visualizations', type: :request do
   before(:all) do
     Dataset.create!(dataset_params)
     @user = User.create!(user_params)
-    @user.visualizations.build(visualization_params)
+    @user.visualizations.create!(visualization_params)
   end
 
   after(:all) do
-    Dataset.delete_all
     Visualization.delete_all
+    Dataset.delete_all
     User.delete_all
   end
 
@@ -68,6 +68,7 @@ RSpec.describe 'Visualizations', type: :request do
         expect(response).to be_success
 
         parsed_response = JSON.parse(response.body)
+        puts parsed_response
         expect(
           parsed_response['visualizations']
         ).not_to be_empty
@@ -76,7 +77,7 @@ RSpec.describe 'Visualizations', type: :request do
 
     describe 'GET /visualizations/:id' do
       it 'is successful' do
-        get "/visualizations/#{@visualization_id}", headers: headers
+        get "/visualizations/#{visualization.id}", headers: headers
 
         expect(response).to be_success
 
@@ -90,18 +91,18 @@ RSpec.describe 'Visualizations', type: :request do
 
   context 'when not authenticated' do
     describe 'GET /visualizations' do
-      it 'is not successful' do
+      it 'is successful' do
         get '/visualizations'
 
-        expect(response).not_to be_success
+        expect(response).to be_success
       end
     end
 
     describe 'GET /visualizations/:id' do
-      it 'is not successful' do
-        get "/visualizations/#{@visualization_id}"
+      it 'is successful' do
+        get "/visualizations/#{visualization.id}"
 
-        expect(response).not_to be_success
+        expect(response).to be_success
       end
     end
   end

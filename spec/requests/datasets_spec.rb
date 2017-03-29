@@ -22,6 +22,7 @@ RSpec.describe 'Datasets', type: :request do
   end
 
   after(:all) do
+    Visualization.delete_all
     Dataset.delete_all
   end
 

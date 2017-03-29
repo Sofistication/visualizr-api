@@ -39,6 +39,14 @@ RSpec.describe VisualizationsController, type: :controller do
     }
   end
 
+  def dataset_params
+    {
+      name: 'Property Assessment',
+      year: 2017,
+      resource: '9a4b1173-89ac-4a01-93e7-661eeb81ba16'
+    }
+  end
+
   def user_params
     {
       email: 'alice@example.com',
@@ -47,14 +55,35 @@ RSpec.describe VisualizationsController, type: :controller do
     }
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # VisualizationsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  before(:all) do
+    http_login
+    # User.delete_all
+    # @user = User.create!(user_params)
+    Dataset.create!(dataset_params)
+  end
+
+  after(:all) do
+    # User.delete_all
+    Visualization.delete_all
+    Dataset.delete_all
+  end
+
+  # def headers
+  #   {
+  #     'HTTP_AUTHORIZATION' => "Token token=#{@token}"
+  #   }
+  # end
+  #
+  # before(:each) do
+  #   post '/sign-in', params: { credentials: user_params }
+  #
+  #   @token = JSON.parse(response.body)['user']['token']
+  #   @user_id = JSON.parse(response.body)['user']['id']
+  # end
 
   describe 'GET #index' do
     it 'assigns all visualizations as @visualizations' do
-      visualization = Visualization.create! valid_attributes
+      visualization = @user.visualizations.build(valid_attributes)
       get :index, params: {}, session: valid_session
       expect(assigns(:visualizations)).to eq([visualization])
     end
@@ -62,8 +91,8 @@ RSpec.describe VisualizationsController, type: :controller do
 
   describe 'GET #show' do
     it 'assigns the requested visualization as @visualization' do
-      visualization = Visualization.create! valid_attributes
-      get :show, params: {id: visualization.to_param}, session: valid_session
+      visualization = @user.visualizations.build(valid_attributes)
+      get :show, params: { id: visualization.to_param }, session: valid_session
       expect(assigns(:visualization)).to eq(visualization)
     end
   end

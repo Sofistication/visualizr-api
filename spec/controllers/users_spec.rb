@@ -11,6 +11,7 @@ RSpec.describe UsersController do
   end
 
   after(:each) do
+    Visualization.delete_all
     User.delete_all
   end
 

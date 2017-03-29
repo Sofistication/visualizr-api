@@ -41,6 +41,11 @@ RSpec.describe DatasetsController, type: :controller do
     }
   end
 
+  after(:all) do
+    Visualization.delete_all
+    Dataset.delete_all
+  end
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # DatasetsController. Be sure to keep this updated too.
@@ -87,11 +92,6 @@ RSpec.describe DatasetsController, type: :controller do
         post :create, params: {dataset: invalid_attributes}, session: valid_session
         expect(assigns(:dataset)).to be_a_new(Dataset)
       end
-
-      it "re-renders the 'new' template" do
-        post :create, params: {dataset: invalid_attributes}, session: valid_session
-        expect(response).to render_template('new')
-      end
     end
   end
 
@@ -126,12 +126,6 @@ RSpec.describe DatasetsController, type: :controller do
         dataset = Dataset.create! valid_attributes
         put :update, params: {id: dataset.to_param, dataset: invalid_attributes}, session: valid_session
         expect(assigns(:dataset)).to eq(dataset)
-      end
-
-      it "re-renders the 'edit' template" do
-        dataset = Dataset.create! valid_attributes
-        put :update, params: {id: dataset.to_param, dataset: invalid_attributes}, session: valid_session
-        expect(response).to render_template('edit')
       end
     end
   end
