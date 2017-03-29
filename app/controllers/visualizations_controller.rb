@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class VisualizationsController < ApplicationController
-  before_action :set_visualization, only: [:show, :update, :destroy]
+class VisualizationsController < OpenReadController
+  before_action :set_visualization, only: [:update, :destroy]
 
   # GET /visualizations
   def index
@@ -12,15 +12,15 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/1
   def show
-    render json: @visualization
+    render json: Visualization.find(params[:id])
   end
 
   # POST /visualizations
   def create
-    @visualization = Visualization.new(visualization_params)
+    @visualization = current_user.visualizations.build(example_params)
 
     if @visualization.save
-      render json: @visualization, status: :created, location: @visualization
+      render json: @visualization, status: :created
     else
       render json: @visualization.errors, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class VisualizationsController < ApplicationController
   # PATCH/PUT /visualizations/1
   def update
     if @visualization.update(visualization_params)
-      render json: @visualization
+      head :no_content
     else
       render json: @visualization.errors, status: :unprocessable_entity
     end
@@ -38,16 +38,19 @@ class VisualizationsController < ApplicationController
   # DELETE /visualizations/1
   def destroy
     @visualization.destroy
+
+    head :no_content
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_visualization
-      @visualization = Visualization.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_visualization
+    @visualization = current_user.visualizations.find(params[:id])
+  end
+  private :set_visualization
 
-    # Only allow a trusted parameter "white list" through.
-    def visualization_params
-      params.require(:visualization).permit(:user_id, :dataset_id, :color)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def visualization_params
+    params.require(:visualization).permit(:user_id, :dataset_id, :color)
+  end
+  private :visualization_params
 end
