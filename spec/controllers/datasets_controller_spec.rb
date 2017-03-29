@@ -27,9 +27,9 @@ RSpec.describe DatasetsController, type: :controller do
   # adjust the attributes here as well.
   def valid_attributes
     {
-      name: 'hello',
-      year: 2015,
-      resource: 'wheniwasayoungboymyfathertookmeintothecity'
+      name: 'Property Assessment',
+      year: 2017,
+      resource: '9a4b1173-89ac-4a01-93e7-661eeb81ba16'
     }
   end
 
