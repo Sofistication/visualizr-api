@@ -18,7 +18,7 @@ class VisualizationsController < OpenReadController
 
   # POST /visualizations
   def create
-    @visualization = current_user.visualizations.build(example_params)
+    @visualization = current_user.visualizations.build(visualization_params)
 
     if @visualization.save
       render json: @visualization, status: :created
@@ -51,7 +51,7 @@ class VisualizationsController < OpenReadController
 
   # Only allow a trusted parameter "white list" through.
   def visualization_params
-    params.require(:visualization).permit(:user_id, :dataset_id, :color)
+    params.require(:visualization).permit(:dataset_id, :color)
   end
   private :visualization_params
 end
