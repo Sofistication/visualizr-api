@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VisualizationSerializer < ActiveModel::Serializer
-  attributes :id, :color, :user, :dataset
+  attributes :id, :color, :user, :dataset, :editable
 
   def user
     object.user.id
@@ -9,5 +9,9 @@ class VisualizationSerializer < ActiveModel::Serializer
 
   def dataset
     object.dataset.id
+  end
+
+  def editable
+    scope == object.user
   end
 end
