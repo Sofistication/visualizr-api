@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170325012310) do
+ActiveRecord::Schema.define(version: 20170329012015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,5 +41,17 @@ ActiveRecord::Schema.define(version: 20170325012310) do
     t.index ["token"], name: "index_users_on_token", unique: true, using: :btree
   end
 
+  create_table "visualizations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "dataset_id"
+    t.string   "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dataset_id"], name: "index_visualizations_on_dataset_id", using: :btree
+    t.index ["user_id"], name: "index_visualizations_on_user_id", using: :btree
+  end
+
   add_foreign_key "examples", "users"
+  add_foreign_key "visualizations", "datasets"
+  add_foreign_key "visualizations", "users"
 end

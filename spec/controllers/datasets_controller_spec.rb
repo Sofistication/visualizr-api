@@ -27,9 +27,9 @@ RSpec.describe DatasetsController, type: :controller do
   # adjust the attributes here as well.
   def valid_attributes
     {
-      name: 'hello',
-      year: 2015,
-      resource: 'wheniwasayoungboymyfathertookmeintothecity'
+      name: 'Property Assessment',
+      year: 2017,
+      resource: '9a4b1173-89ac-4a01-93e7-661eeb81ba16'
     }
   end
 
@@ -39,6 +39,11 @@ RSpec.describe DatasetsController, type: :controller do
       year: 'i am not a number',
       resource: ['a', 'b', 'c', 1, 2, 3]
     }
+  end
+
+  after(:all) do
+    Visualization.delete_all
+    Dataset.delete_all
   end
 
   # This should return the minimal set of values that should be in the session
@@ -87,11 +92,6 @@ RSpec.describe DatasetsController, type: :controller do
         post :create, params: {dataset: invalid_attributes}, session: valid_session
         expect(assigns(:dataset)).to be_a_new(Dataset)
       end
-
-      it "re-renders the 'new' template" do
-        post :create, params: {dataset: invalid_attributes}, session: valid_session
-        expect(response).to render_template('new')
-      end
     end
   end
 
@@ -126,12 +126,6 @@ RSpec.describe DatasetsController, type: :controller do
         dataset = Dataset.create! valid_attributes
         put :update, params: {id: dataset.to_param, dataset: invalid_attributes}, session: valid_session
         expect(assigns(:dataset)).to eq(dataset)
-      end
-
-      it "re-renders the 'edit' template" do
-        dataset = Dataset.create! valid_attributes
-        put :update, params: {id: dataset.to_param, dataset: invalid_attributes}, session: valid_session
-        expect(response).to render_template('edit')
       end
     end
   end

@@ -11,6 +11,7 @@ RSpec.describe 'Authentication API' do
   end
 
   after(:all) do
+    Visualization.delete_all
     User.delete_all
   end
 
