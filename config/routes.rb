@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
+  resources :visualizations, except: [:new, :edit]
   resources :datasets, only: [:index, :show]
   resources :examples, except: [:new, :edit]
 

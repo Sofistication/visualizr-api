@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Datasets', type: :request do
   def dataset_params
     {
-      name: 'hello',
-      year: 2015,
-      resource: 'wheniwasayoungboymyfathertookmeintothecity'
+      name: 'Property Assessment',
+      year: 2017,
+      resource: '9a4b1173-89ac-4a01-93e7-661eeb81ba16'
     }
   end
 
@@ -22,6 +22,7 @@ RSpec.describe 'Datasets', type: :request do
   end
 
   after(:all) do
+    Visualization.delete_all
     Dataset.delete_all
   end
 

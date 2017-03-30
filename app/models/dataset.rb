@@ -2,6 +2,9 @@
 require 'open-uri'
 
 class Dataset < ApplicationRecord
+  has_many :users, through: :visualizations
+  has_many :visualizations, dependent: :destroy
+
   def boston_dataset
     'https://data.boston.gov/api/action/datastore_search?resource_id='
   end
