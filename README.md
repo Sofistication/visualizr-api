@@ -29,6 +29,7 @@ The following is the Entity Relationship Diagram for the first version of this a
 Clone this repo and run
 
 - `bundle install`
+- `bin/rake db:nuke_pave`
 - `bin/rails server`
 
 ## Technologies used
