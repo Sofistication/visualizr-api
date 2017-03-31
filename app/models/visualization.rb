@@ -3,4 +3,6 @@
 class Visualization < ApplicationRecord
   belongs_to :user
   belongs_to :dataset
+
+  validates :user, :dataset, presence: true
 end
