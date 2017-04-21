@@ -3,9 +3,19 @@
 # auth helper for controller tests
 module AuthHelper
   def http_login
-    user = 'username'
-    pw = 'password'
-    request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
+    post '/sign-up', params: { credentials: user_params }
+    post '/sign-in', params: { credentials: user_params }
+
+    @token = JSON.parse(response.body)['user']['token']
+    request.env['HTTP_AUTHORIZATION'] = "Token token=#{@token}"
+  end
+
+  def user_params
+    {
+      email: 'alice@example.com',
+      password: 'foobarbaz',
+      password_confirmation: 'foobarbaz'
+    }
   end
 end
 

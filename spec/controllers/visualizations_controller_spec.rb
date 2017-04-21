@@ -67,12 +67,6 @@ RSpec.describe VisualizationsController, type: :controller do
     Visualization.delete_all
     Dataset.delete_all
   end
-
-  # def headers
-  #   {
-  #     'HTTP_AUTHORIZATION' => "Token token=#{@token}"
-  #   }
-  # end
   #
   # before(:each) do
   #   post '/sign-in', params: { credentials: user_params }
