@@ -68,7 +68,6 @@ RSpec.describe 'Visualizations', type: :request do
         expect(response).to be_success
 
         parsed_response = JSON.parse(response.body)
-        puts parsed_response
         expect(
           parsed_response['visualizations']
         ).not_to be_empty
@@ -91,10 +90,10 @@ RSpec.describe 'Visualizations', type: :request do
 
   context 'when not authenticated' do
     describe 'GET /visualizations' do
-      it 'is successful' do
+      it 'is not successful' do
         get '/visualizations'
 
-        expect(response).to be_success
+        expect(response).not_to be_success
       end
     end
 
